@@ -1,0 +1,23 @@
+[
+  {
+    "id": "phoenix",
+    "name": "Phoenix",
+    "description": "Visualize a majestosa Fênix em realidade aumentada com animações fluidas",
+    "image": "assets/img/phoenix.jpg",
+    "folder": "phoenix"
+  },
+  {
+    "id": "robot",
+    "name": "Robot",
+    "description": "Robô animado com múltiplas animações controláveis em realidade aumentada",
+    "image": "assets/img/robot.jpg",
+    "folder": "robot"
+  },
+  {
+    "id": "shenron",
+    "name": "Shenron",
+    "description": "O lendário dragão de Dragon Ball em realidade aumentada",
+    "image": "assets/img/shenron.jpg",
+    "folder": "shenron"
+  }
+]
