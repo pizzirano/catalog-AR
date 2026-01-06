@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Experiência AR - L&L Tecnologias LTDA</title>
+	
+	<!-- A-Frame -->
+	<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+	
+	<!-- AR.js para marker tracking -->
+	<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.2/aframe/build/aframe-ar-nft.js"></script>
+	
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+		
+		.back-button {
+			position: fixed;
+			top: 20px;
+			left: 20px;
+			z-index: 1000;
+			background: rgba(0, 0, 0, 0.7);
+			color: #fff;
+			padding: 10px 20px;
+			border-radius: 5px;
+			text-decoration: none;
+			font-family: Arial, sans-serif;
+			font-size: 14px;
+		}
+		
+		.back-button:hover {
+			background: rgba(0, 0, 0, 0.9);
+		}
+		
+		.info-panel {
+			position: fixed;
+			bottom: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: 1000;
+			background: rgba(0, 0, 0, 0.7);
+			color: #fff;
+			padding: 15px 30px;
+			border-radius: 8px;
+			font-family: Arial, sans-serif;
+			font-size: 14px;
+			text-align: center;
+			max-width: 90%;
+		}
+	</style>
+</head>
+
+<body>
+	<a href="index.html" class="back-button">
+		← Voltar
+	</a>
+	
+	<div class="info-panel">
+		<p>Aponte a câmera para o marcador (marker.png) para visualizar o modelo 3D</p>
+	</div>
+	
+	<!-- A-Frame Scene -->
+	<a-scene 
+		vr-mode-ui="enabled: false"
+		embedded
+		arjs="sourceType: webcam; detectionMode: mono; trackingMethod: best; debugUIEnabled: false;">
+		
+		<!-- Marker - Use marker padrão do AR.js ou substitua por seu próprio -->
+		<a-marker 
+			type="pattern" 
+			preset="hiro"
+			markerhandler
+			emitevents="true"
+			cursor="rayOrigin: mouse">
+			
+			<!-- Modelo 3D - Substitua models/model.glb pelo seu modelo -->
+			<a-entity 
+				gltf-model="models/model.glb" 
+				scale="1 1 1"
+				position="0 0.5 0"
+				rotation="0 0 0"
+				animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
+			</a-entity>
+			
+		</a-marker>
+		
+		<!-- Camera -->
+		<a-entity camera></a-entity>
+		
+	</a-scene>
+	
+	<script>
+		// Fallback: se marker.patt não funcionar, usar marker.png como imagem
+		// Você pode criar um arquivo .patt usando ferramentas como https://jeromeetienne.github.io/AR.js/three.js/examples/marker-training/examples/generator.html
+	</script>
+</body>
+
+</html>
+

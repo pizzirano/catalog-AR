@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <title>Imovel AR - L&L Tecnologias LTDA</title>
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+
+    <!-- Extras (animation-mixer) -->
+    <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+
+    <!-- AR.js -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+      
+      .back-button:hover {
+        background: rgba(0, 0, 0, 0.9);
+      }
+      
+      .info-panel {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 15px 30px;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: center;
+        max-width: 90%;
+      }
+    </style>
+
+    <script>
+      // Componente para detectar gestos touch e emitir eventos
+      AFRAME.registerComponent('touch-gestures', {
+        init: function() {
+          const sceneEl = this.el;
+          let touches = [];
+          let lastOneFingerPos = null;
+          let lastTwoFingerDistance = null;
+
+          sceneEl.addEventListener('touchstart', (e) => {
+            touches = Array.from(e.touches);
+            
+            if (touches.length === 1) {
+              lastOneFingerPos = {
+                x: touches[0].clientX,
+                y: touches[0].clientY
+              };
+            } else if (touches.length === 2) {
+              const distance = Math.hypot(
+                touches[1].clientX - touches[0].clientX,
+                touches[1].clientY - touches[0].clientY
+              );
+              lastTwoFingerDistance = distance;
+            }
+          });
+
+          sceneEl.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            touches = Array.from(e.touches);
+
+            if (touches.length === 1 && lastOneFingerPos) {
+              const positionChange = {
+                x: touches[0].clientX - lastOneFingerPos.x,
+                y: touches[0].clientY - lastOneFingerPos.y
+              };
+              
+              sceneEl.emit('onefingermove', {
+                detail: { positionChange: positionChange }
+              });
+              
+              lastOneFingerPos = {
+                x: touches[0].clientX,
+                y: touches[0].clientY
+              };
+            } else if (touches.length === 2 && lastTwoFingerDistance) {
+              const distance = Math.hypot(
+                touches[1].clientX - touches[0].clientX,
+                touches[1].clientY - touches[0].clientY
+              );
+              
+              const spreadChange = distance - lastTwoFingerDistance;
+              
+              sceneEl.emit('twofingermove', {
+                detail: { spreadChange: spreadChange }
+              });
+              
+              lastTwoFingerDistance = distance;
+            }
+          });
+
+          sceneEl.addEventListener('touchend', () => {
+            touches = [];
+            lastOneFingerPos = null;
+            lastTwoFingerDistance = null;
+          });
+        }
+      });
+
+      // Variáveis para controle de manipulação
+      let isMarkerVisible = false;
+      const rotationFactor = 0.01;
+      const scaleFactor = 0.01;
+      let modelEntity = null;
+      let initialScale = { x: 0.3, y: 0.3, z: 0.3 };
+
+      // Função para rotação com um dedo
+      function handleRotation(event) {
+        if (isMarkerVisible && modelEntity) {
+          modelEntity.object3D.rotation.y +=
+            event.detail.positionChange.x * rotationFactor;
+
+          modelEntity.object3D.rotation.x +=
+            event.detail.positionChange.y * rotationFactor;
+        }
+      }
+
+      // Função para escala com dois dedos
+      function handleScale(event) {
+        if (isMarkerVisible && modelEntity) {
+          const scaleChange = event.detail.spreadChange || 0;
+          const currentScale = modelEntity.getAttribute('scale') || initialScale;
+          const newScale = {
+            x: Math.max(0.1, Math.min(2.0, currentScale.x + scaleChange * scaleFactor)),
+            y: Math.max(0.1, Math.min(2.0, currentScale.y + scaleChange * scaleFactor)),
+            z: Math.max(0.1, Math.min(2.0, currentScale.z + scaleChange * scaleFactor))
+          };
+          
+          modelEntity.setAttribute('scale', `${newScale.x} ${newScale.y} ${newScale.z}`);
+        }
+      }
+
+      // Inicialização quando a cena estiver pronta
+      document.addEventListener('DOMContentLoaded', function() {
+        const sceneEl = document.querySelector('a-scene');
+        
+        sceneEl.addEventListener('loaded', function() {
+          // Encontrar a entidade do modelo
+          modelEntity = sceneEl.querySelector('[gltf-model]');
+          
+          // Obter escala inicial do modelo
+          if (modelEntity) {
+            const currentScale = modelEntity.getAttribute('scale');
+            if (currentScale) {
+              initialScale = {
+                x: currentScale.x || 0.3,
+                y: currentScale.y || 0.3,
+                z: currentScale.z || 0.3
+              };
+            }
+          }
+          
+          // Encontrar o marcador
+          const marker = sceneEl.querySelector('a-marker');
+          
+          // Eventos do marcador
+          marker.addEventListener('markerFound', function() {
+            isMarkerVisible = true;
+          });
+          
+          marker.addEventListener('markerLost', function() {
+            isMarkerVisible = false;
+          });
+
+          // Adicionar event listeners para manipulação
+          sceneEl.addEventListener('onefingermove', handleRotation);
+          sceneEl.addEventListener('twofingermove', handleScale);
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <a href="index.html" class="back-button">
+      ← Voltar
+    </a>
+    
+    <div class="info-panel">
+      <p>Aponte a câmera para o marcador Hiro para visualizar o Imovel</p>
+    </div>
+
+    <a-scene
+      embedded
+      touch-gestures
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    >
+      <!-- Assets para pré-carregar o modelo -->
+      <a-assets>
+        <a-asset-item id="imovel" src="models/imovel.glb"></a-asset-item>
+      </a-assets>
+
+      <!-- Marcador Hiro -->
+      <a-marker preset="hiro">
+        <a-entity
+          gltf-model="#imovel"
+          scale="0.3 0.3 0.3"
+          position="0 0 0"
+          rotation="0 180 0"
+          animation-mixer
+        ></a-entity>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+
+  </body>
+</html>
+

@@ -1,0 +1,581 @@
+/* ===================================
+   L&L Tecnologias LTDA - Catálogo AR
+   =================================== */
+
+/* Reset & Base */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 14px;
+	line-height: 1.6;
+	color: #555;
+	overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Varela Round', sans-serif;
+	font-weight: 400;
+	color: #333;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	transition: 0.3s;
+}
+
+a:hover, a:focus {
+	text-decoration: none;
+	color: inherit;
+}
+
+ul {
+	list-style: none;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Container */
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+/* Header */
+header {
+	position: relative;
+	height: 100vh;
+	min-height: 600px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.bg-img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	background-size: cover;
+	background-position: center;
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+/* Navbar */
+.navbar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+	padding: 10px 0;
+	transition: 0.3s !important;
+	background-color: #2e3b44;
+	box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.navbar .container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+}
+
+.navbar-brand {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.navbar-brand-group {
+  display: flex;
+  align-items: center; /* Centraliza o texto com o meio da imagem */
+  gap: 15px;           /* Espaço entre a imagem e o texto */
+}
+
+/* Ajuste o tamanho do logo para não empurrar a barra para baixo */
+.logo {
+  height: 100px;        /* Reduzi de 100px para 50px para caber melhor na navbar */
+  width: auto;
+	position: left;
+}
+
+/* Garante que o texto não quebre linha */
+.logo-text {
+  white-space: nowrap; 
+}
+
+.main-nav {
+	display: flex;
+	gap: 30px;
+}
+
+.main-nav li a {
+	color: #fff;
+	font-weight: 500;
+	padding: 10px 0;
+	transition: 0.3s;
+}
+
+.main-nav li a:hover {
+	color: #667eea;
+}
+
+.nav-collapse {
+	display: none;
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	flex-direction: column;
+	justify-content: center;
+	gap: 5px;
+}
+
+.nav-collapse span {
+	display: block;
+	width: 100%;
+	height: 3px;
+	background: #fff;
+	transition: 0.3s;
+}
+
+/* Home Content */
+.home-wrapper {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+}
+
+.home-content {
+	text-align: center;
+	color: #fff;
+}
+
+.home-content h1 {
+	font-size: 48px;
+	margin-bottom: 20px;
+	color: #fff;
+}
+
+.home-content p {
+	font-size: 18px;
+	margin-bottom: 30px;
+	opacity: 0.9;
+}
+
+.white-text {
+	color: #fff !important;
+}
+
+/* Buttons */
+.white-btn, .main-btn {
+	display: inline-block;
+	padding: 12px 30px;
+	border: 1px solid #fff;
+	color: #2e3b44;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin: 10px;
+	transition: 0.3s;
+	cursor: pointer;
+	
+}
+
+.white-btn:hover, .main-btn:hover {
+	background: #fff;
+	color: #667eea;
+}
+
+.main-btn {
+	background: #667eea;
+	border-color: #667eea;
+}
+
+.main-btn:hover {
+	background: #764ba2;
+	border-color: #764ba2;
+	color: #fff;
+}
+
+/* Section */
+.section {
+	padding: 80px 0;
+}
+
+.md-padding {
+	padding: 80px 0;
+}
+
+.sm-padding {
+	padding: 40px 0;
+}
+
+.bg-grey {
+	background: #f5f5f5;
+}
+
+.bg-dark {
+	background: #222;
+}
+
+/* Section Header */
+.section-header {
+	margin-bottom: 60px;
+	width: 100%;
+	display: block;
+}
+
+.section-header .title {
+	font-size: 36px;
+	margin-bottom: 20px;
+	text-align: center;
+	width: 100%;
+}
+
+.text-center {
+	text-align: center;
+}
+
+/* About */
+.about {
+	text-align: center;
+	padding: 30px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.about i {
+	font-size: 48px;
+	color: #667eea;
+	margin-bottom: 20px;
+}
+
+.about h3 {
+	font-size: 24px;
+	margin-bottom: 15px;
+}
+
+.about p {
+	color: #777;
+}
+
+/* Portfolio / Projects - removido duplicado, definido abaixo */
+
+.work {
+	position: relative;
+	overflow: hidden;
+	border-radius: 8px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	transition: 0.3s;
+	background: #fff;
+	width: 100%;
+	max-width: 100%;
+}
+
+.work:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.work img {
+	width: 100%;
+	height: 250px;
+	object-fit: cover;
+	display: block;
+}
+
+.work .overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(102, 126, 234, 0.9);
+	opacity: 0;
+	transition: 0.3s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.work:hover .overlay {
+	opacity: 1;
+}
+
+.work-content {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 20px;
+	background: rgba(0, 0, 0, 0.7);
+	color: #fff;
+	transform: translateY(100%);
+	transition: 0.3s;
+}
+
+.work:hover .work-content {
+	transform: translateY(0);
+}
+
+.work-content span {
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	opacity: 0.8;
+}
+
+.work-content h3 {
+	color: #fff;
+	font-size: 20px;
+	margin: 5px 0;
+}
+
+.work-link {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	opacity: 0;
+	transition: 0.3s;
+}
+
+.work:hover .work-link {
+	opacity: 1;
+}
+
+.work-link a {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	background: #fff;
+	color: #667eea;
+	border-radius: 50%;
+	font-size: 20px;
+}
+
+.work-link a:hover {
+	background: #667eea;
+	color: #fff;
+}
+
+/* Footer */
+footer {
+	color: #fff;
+	text-align: center;
+}
+
+.footer-logo {
+	margin-bottom: 10px;
+}
+
+.footer-logo .logo-text {
+	color: #fff;
+	font-size: 20px;
+}
+
+/* Back to top */
+#back-to-top {
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	width: 50px;
+	height: 50px;
+	background: #667eea;
+	color: #fff;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	opacity: 0;
+	visibility: hidden;
+	transition: 0.3s;
+	z-index: 999;
+}
+
+#back-to-top.show {
+	opacity: 1;
+	visibility: visible;
+}
+
+#back-to-top:hover {
+	background: #764ba2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.home-content h1 {
+		font-size: 32px;
+	}
+
+	.main-nav {
+		position: fixed;
+		top: 70px;
+		left: -100%;
+		width: 100%;
+		height: calc(100vh - 70px);
+		background: rgba(0, 0, 0, 0.95);
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		padding-top: 50px;
+		transition: 0.3s;
+	}
+
+	.main-nav.active {
+		left: 0;
+	}
+
+	.nav-collapse {
+		display: flex;
+	}
+
+	.projects-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Row & Col */
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 -15px;
+	width: calc(100% + 30px);
+	box-sizing: border-box;
+}
+
+.col-md-4, .col-md-10, .col-md-12 {
+	padding: 0 15px;
+	box-sizing: border-box;
+}
+
+.col-md-4 {
+	flex: 0 0 33.333333%;
+	max-width: 33.333333%;
+}
+
+.col-md-10 {
+	flex: 0 0 83.333333%;
+	max-width: 83.333333%;
+}
+
+.col-md-12 {
+	flex: 0 0 100%;
+	max-width: 100%;
+	
+}
+
+.col-md-offset-1 {
+	margin-left: 8.333333%;
+}
+
+/* Projects Grid - melhor alinhamento */
+#projects-container {
+	width: 100%;
+	margin-top: 40px;
+}
+
+.projects-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 30px;
+	margin-top: 40px;
+	width: 100%;
+	justify-items: center;
+}
+
+/* Section header alinhamento */
+.section-header {
+	width: 100%;
+	margin-bottom: 60px;
+	display: block;
+}
+
+.section-header .title {
+	width: 100%;
+	text-align: center;
+}
+
+/* About section - melhor alinhamento */
+#about .row {
+	justify-content: center;
+	align-items: stretch;
+}
+
+#about .col-md-4 {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 30px;
+}
+
+#about .about {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+	transition: 0.3s;
+}
+
+#about .about:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+/* Portfolio section */
+#portfolio .container {
+	display: block;
+	width: 100%;
+}
+
+#portfolio .section-header {
+	width: 100%;
+	display: block;
+	margin-bottom: 60px;
+}
+
+@media (max-width: 768px) {
+	.col-md-4, .col-md-10, .col-md-12 {
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+
+	.col-md-offset-1 {
+		margin-left: 0;
+	}
+	
+	.projects-grid {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+}
+

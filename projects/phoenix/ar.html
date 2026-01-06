@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <title>Phoenix AR - L&L Tecnologias LTDA</title>
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+
+    <!-- Extras (animation-mixer) -->
+    <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+
+    <!-- AR.js -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+      
+      .back-button:hover {
+        background: rgba(0, 0, 0, 0.9);
+      }
+      
+      .info-panel {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 15px 30px;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: center;
+        max-width: 90%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a href="index.html" class="back-button">
+      ← Voltar
+    </a>
+    
+    <div class="info-panel">
+      <p>Aponte a câmera para o marcador Hiro para visualizar a Fênix</p>
+    </div>
+
+    <a-scene
+      embedded
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    >
+      <!-- Assets para pré-carregar o modelo -->
+      <a-assets>
+        <a-asset-item id="phoenix" src="models/fenix.glb"></a-asset-item>
+      </a-assets>
+
+      <!-- Marcador Hiro -->
+      <a-marker preset="hiro">
+        <a-entity
+          gltf-model="#phoenix"
+          scale="0.01 0.01 0.01"
+          position="0 0 0"
+          rotation="0 180 0"
+          animation-mixer
+        ></a-entity>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+      // Debug: verificar se o modelo está carregando
+      document.addEventListener('DOMContentLoaded', function() {
+        const scene = document.querySelector('a-scene');
+        if (scene) {
+          scene.addEventListener('loaded', function() {
+            console.log('Scene carregada');
+          });
+        }
+
+        // Verificar se o asset foi carregado
+        const asset = document.querySelector('#phoenix');
+        if (asset) {
+          asset.addEventListener('loaded', function() {
+            console.log('Modelo Phoenix carregado com sucesso!');
+          });
+          asset.addEventListener('error', function(e) {
+            console.error('Erro ao carregar modelo:', e);
+            alert('Erro ao carregar o modelo. Verifique o console para mais detalhes.');
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
+
